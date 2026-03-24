@@ -3,94 +3,145 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 Yıllık Miras | Final Version</title>
+    <title>3 Yıllık Miras | Efsane Tayfa</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,700&family=Plus+Jakarta+Sans:wght@400;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,700&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fdfaf6; overflow-x: hidden; scroll-behavior: smooth; }
         .serif { font-family: 'Unna', serif; }
-        .card { transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275); border: 1px solid rgba(0,0,0,0.03); }
-        .levent-run { transition: all 0.2s ease; position: relative; cursor: help; }
-        #quote-display { animation: fadeIn 0.5s ease-in-out; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* Arka Plan Mesh Efekti */
+        .mesh-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; opacity: 0.4; filter: blur(100px); pointer-events: none; }
+        .mesh-ball { position: absolute; border-radius: 50%; animation: meshRotate 20s infinite linear; }
+        @keyframes meshRotate { from { transform: rotate(0deg) translate(50px) rotate(0deg); } to { transform: rotate(360deg) translate(50px) rotate(-360deg); } }
+
+        /* Kart Temel Stilleri */
+        .card { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.5); transform-style: preserve-3d; transition: transform 0.1s ease, box-shadow 0.3s ease; opacity: 0; transform: translateY(50px); }
+        .card:hover { box-shadow: 0 40px 80px -15px rgba(0,0,0,0.15); }
+        
+        /* Brawl Stars Bar Animasyonu */
         .brawl-bar { height: 6px; background: #eee; border-radius: 10px; overflow: hidden; margin-top: 5px; }
-        .brawl-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); width: 100%; }
+        .brawl-fill { height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); width: 0%; transition: width 1.5s ease-out 0.5s; }
+        
+        /* Levent Kartı Özel Efekt */
+        #levent-card { background: rgba(15, 15, 15, 0.95); border: 2px solid transparent; background-clip: padding-box; position: relative; cursor: help; }
+        #levent-card::before { content: ''; position: absolute; top: -2px; left: -2px; right: -2px; bottom: -2px; z-index: -1; background: linear-gradient(45deg, #ff0000, #ff8a00, #ff0000); border-radius: 3rem; animation: steam 5s linear infinite; opacity: 0.5; }
+        @keyframes steam { 0% { background-position: 0 0; } 50% { background-position: 400% 0; } 100% { background-position: 0 0; } }
+
+        /* Anı Kutusu Giriş Animasyonu */
+        #quote-display { min-h-[60px]; animation: fadeInQuote 0.5s ease-out; }
+        @keyframes fadeInQuote { from { opacity: 0; transform: scale(0.95); } to { opacity: 1; transform: scale(1); } }
     </style>
 </head>
 <body class="text-stone-900">
 
-    <div class="bg-stone-950 text-white py-2 text-center text-[10px] font-bold tracking-[0.4em] sticky top-0 z-50 border-b border-amber-500/50">
+    <div class="mesh-bg">
+        <div class="mesh-ball w-96 h-96 bg-amber-200 top-20 left-10" style="animation-delay: 0s;"></div>
+        <div class="mesh-ball w-80 h-80 bg-red-100 bottom-20 right-10" style="animation-delay: -5s;"></div>
+        <div class="mesh-ball w-64 h-64 bg-stone-200 top-1/2 left-1/2" style="animation-delay: -10s;"></div>
+    </div>
+
+    <div class="bg-stone-950 text-white py-3 text-center text-[10px] font-bold tracking-[0.4em] sticky top-0 z-50 border-b border-amber-500/30">
         3 YILDIR KESİNTİSİZ DOSTLUK: <span id="main-timer" class="text-amber-500">YÜKLENİYOR...</span>
     </div>
 
-    <header class="py-24 text-center px-4 relative">
-        <div class="serif text-[12rem] md:text-[18rem] opacity-[0.03] absolute left-1/2 -translate-x-1/2 top-0 select-none font-bold">3YR</div>
-        <h2 class="serif text-6xl md:text-8xl font-bold relative z-10 tracking-tighter">Bizim <span class="text-amber-600 italic">Tayfa.</span></h2>
+    <header class="py-28 text-center px-4 relative z-10">
+        <div class="serif text-[12rem] md:text-[20rem] opacity-[0.03] absolute left-1/2 -translate-x-1/2 top-0 select-none font-bold">3YR</div>
+        <h2 id="header-title" class="serif text-6xl md:text-9xl font-bold tracking-tighter opacity-0 translate-y-10">Bizim <span class="text-amber-600 italic">Tayfa.</span></h2>
         
-        <div class="mt-12 relative z-10">
-            <button onclick="generateQuote()" class="bg-stone-900 text-white px-8 py-4 rounded-full text-xs font-extrabold hover:bg-amber-600 transition-all shadow-2xl hover:scale-105 active:scale-95">
-                3 YILLIK BİR ANI PATLAT
+        <div id="header-btn" class="mt-12 opacity-0 translate-y-10">
+            <button onclick="generateQuote()" class="bg-stone-900 text-white px-10 py-5 rounded-full text-xs font-extrabold hover:bg-amber-600 transition-all shadow-2xl hover:scale-105 active:scale-95 group relative overflow-hidden">
+                <span class="relative z-10">3 YILLIK BİR ANI PATLAT</span>
+                <div class="absolute inset-0 bg-amber-500 transform scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left"></div>
             </button>
-            <div id="quote-display" class="mt-8 font-serif italic text-2xl text-stone-600 max-w-xl mx-auto px-4 min-h-[60px]"></div>
+            <div id="quote-display" class="mt-10 font-serif italic text-2xl text-stone-600 max-w-xl mx-auto px-4"></div>
         </div>
     </header>
 
-    <main class="max-w-6xl mx-auto px-6 grid gap-8 md:grid-cols-2 lg:grid-cols-3 pb-40">
+    <main id="card-grid" class="max-w-6xl mx-auto px-6 grid gap-10 md:grid-cols-2 lg:grid-cols-3 pb-48 relative z-10">
         
-        <div class="card bg-white p-10 rounded-[3rem] shadow-xl border-t-8 border-amber-500">
+        <div class="card p-10 rounded-[3rem] border-t-8 border-amber-500 group" data-tilt>
             <div class="flex justify-between items-start mb-6">
                 <h3 class="serif text-4xl italic font-bold">Tokita</h3>
-                <span class="text-[9px] bg-red-600 text-white px-3 py-1 rounded-full font-black">BRAWL STARS DADDY</span>
+                <span class="text-[9px] bg-red-600 text-white px-3 py-1 rounded-full font-black group-hover:scale-110 transition">BRAWL STARS DADDY</span>
             </div>
             <p class="text-sm text-stone-500 leading-relaxed mb-8">3 yıllık dostlukta güvenin adresi. Ama asıl uzmanlık alanı arenalar; tam bir Brawl Stars babası. Onunla maça giren rakip çoktan kaybetmiştir.</p>
             <div class="space-y-4">
-                <div class="text-[10px] font-black uppercase text-stone-400 tracking-widest">Oyun Zekası <div class="brawl-bar"><div class="brawl-fill"></div></div></div>
-                <div class="text-[10px] font-black uppercase text-stone-400 tracking-widest">Sadakat <div class="brawl-bar"><div class="brawl-fill"></div></div></div>
+                <div class="text-[10px] font-black uppercase text-stone-400 tracking-widest">Oyun Zekası <div class="brawl-bar"><div class="brawl-fill" style="width: 100%;"></div></div></div>
+                <div class="text-[10px] font-black uppercase text-stone-400 tracking-widest">Sadakat <div class="brawl-bar"><div class="brawl-fill" style="width: 100%;"></div></div></div>
             </div>
         </div>
 
-        <div class="card bg-white p-10 rounded-[3rem] shadow-lg">
+        <div class="card p-10 rounded-[3rem]" data-tilt>
             <h3 class="serif text-4xl italic font-bold mb-6">Umme</h3>
-            <p class="text-sm text-stone-500 leading-relaxed italic">"3 koca yıldır grubun en pozitif, en anlayışlı ismi. Umme bizim huzur kaynağımız ve sarsılmaz bir dostumuz."</p>
-            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase">#3YılHuzur</div>
+            <p class="text-sm text-stone-500 leading-relaxed italic border-l-4 border-amber-100 pl-4 bg-amber-50/50 py-2">"3 koca yıldır grubun en pozitif, en anlayışlı ismi. Umme bizim huzur kaynağımız ve sarsılmaz bir dostumuz."</p>
+            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase tracking-widest">#3YılHuzur</div>
         </div>
 
-        <div class="card bg-white p-10 rounded-[3rem] shadow-lg">
+        <div class="card p-10 rounded-[3rem]" data-tilt>
             <h3 class="serif text-4xl italic font-bold mb-6">Memo</h3>
-            <p class="text-sm text-stone-500 leading-relaxed italic">"Olaylara 'Memo' dokunuşu diye bir şey var. 3 yıldır her zorluğu zekası ve sakinliğiyle çözen adam gibi adam."</p>
-            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase">#StratejiDehası</div>
+            <p class="text-sm text-stone-500 leading-relaxed italic border-l-4 border-amber-100 pl-4 bg-amber-50/50 py-2">"Olaylara 'Memo' dokunuşu diye bir şey var. 3 yıldır her zorluğu zekası ve sakinliğiyle çözen adam gibi adam."</p>
+            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase tracking-widest">#StratejiDehası</div>
         </div>
 
-        <div class="card bg-white p-10 rounded-[3rem] shadow-lg">
+        <div class="card p-10 rounded-[3rem]" data-tilt>
             <h3 class="serif text-4xl italic font-bold mb-6">Mami</h3>
-            <p class="text-sm text-stone-500 leading-relaxed italic">"Samimiyet denince akla gelen ilk isim. 3 yıldır bitmeyen enerjisi ve harbi duruşuyla grubun kalbi."</p>
-            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase">#HarbiDost</div>
+            <p class="text-sm text-stone-500 leading-relaxed italic border-l-4 border-amber-100 pl-4 bg-amber-50/50 py-2">"Samimiyet denince akla gelen ilk isim. 3 yıldır bitmeyen enerjisi ve harbi duruşuyla grubun kalbi."</p>
+            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase tracking-widest">#HarbiDost</div>
         </div>
 
-        <div class="card bg-white p-10 rounded-[3rem] shadow-lg border-b-8 border-amber-600">
-            <h3 class="serif text-4xl italic font-bold mb-6">Dico</h3>
-            <p class="text-sm text-stone-500 leading-relaxed italic">"3 yıllık vizyon ve karizma... Dico'nun gruptaki ağırlığı ve tarzı her zaman fark yaratır. Ekibin yüzü."</p>
-            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase">#KarizmaVizyon</div>
+        <div class="card p-10 rounded-[3rem] border-b-8 border-amber-600" data-tilt>
+            <h3 class="serif text-4xl italic font-bold mb-6 text-amber-900">Dico</h3>
+            <p class="text-sm text-stone-500 leading-relaxed italic border-l-4 border-amber-100 pl-4 bg-amber-50/50 py-2">"3 yıllık vizyon ve karizma... Dico'nun gruptaki ağırlığı ve tarzı her zaman fark yaratır. Ekibin yüzü."</p>
+            <div class="mt-8 text-[10px] font-bold text-amber-600 uppercase tracking-widest">#KarizmaVizyon</div>
         </div>
 
-        <div id="levent-card" class="levent-run bg-stone-900 text-white p-10 rounded-[3rem] shadow-2xl border-4 border-red-600 group" onmouseover="moveLevent()">
-            <div class="absolute -top-3 -right-3 bg-red-600 text-white text-[10px] px-4 py-2 rounded-full font-black rotate-12">YAVŞAK ALERT</div>
+        <div id="levent-card" class="card levent-run text-white p-10 rounded-[3rem] group" onmouseover="moveLevent()" data-tilt>
+            <div class="absolute -top-3 -right-3 bg-red-600 text-white text-[10px] px-4 py-2 rounded-full font-black rotate-12 group-hover:animate-pulse">YAVŞAK ALERT</div>
             <h3 class="serif text-4xl italic font-bold mb-6 text-red-600 uppercase">Levent</h3>
-            <p class="text-sm text-stone-400 leading-relaxed">Geldik 3 yıllık sabır testimize. Levent'in yavşaklık seviyesi artık ölçülemiyor. Mouse ile üzerine git bakalım yakalayabilecek misin?</p>
-            <div class="mt-8 flex justify-between items-center">
-                <span class="text-[10px] font-black text-red-500">DURUM: %100 YAVŞAK</span>
-                <span class="text-[9px] text-stone-600 italic">Yakalamak İmkansız</span>
+            <p class="text-sm text-stone-400 leading-relaxed mb-6">Geldik 3 yıllık sabır testimize. Levent'in yavşaklık seviyesi artık ölçülemiyor. Mouse ile üzerine git bakalım yakalayabilecek misin?</p>
+            <div class="bg-stone-800 p-4 rounded-2xl border border-stone-700">
+                <div class="text-[10px] font-black text-red-500 tracking-widest mb-2">DURUM: %100 YAVŞAK</div>
+                <div class="brawl-bar bg-stone-700"><div class="brawl-fill bg-red-600" style="width: 100%;"></div></div>
             </div>
         </div>
 
     </main>
 
-    <footer class="py-12 bg-stone-100 text-center border-t border-stone-200">
-        <p class="serif italic text-stone-400 text-xl">"Dostluk bakidir, Levent yavşaktır."</p>
-        <p class="mt-4 text-[9px] font-bold uppercase tracking-[0.6em] text-stone-400">Since 2023 - All Rights Reserved</p>
+    <footer class="py-16 bg-white text-center border-t border-stone-200 relative z-10">
+        <p class="serif italic text-stone-400 text-2xl">"Dostluk bakidir, Levent yavşaktır."</p>
+        <p class="mt-5 text-[9px] font-bold uppercase tracking-[0.6em] text-stone-400">Since 2023 - All Rights Reserved</p>
     </footer>
 
     <script>
+        // GSAP GİRİŞ ANİMASYONLARI
+        window.addEventListener('load', () => {
+            const tl = gsap.timeline({ defaults: { ease: "power4.out", duration: 1.2 } });
+            tl.to("#header-title", { opacity: 1, y: 0 })
+              .to("#header-btn", { opacity: 1, y: 0 }, "-=0.8")
+              .to(".card", { opacity: 1, y: 0, stagger: 0.15 }, "-=1");
+        });
+
+        // 3D TILT EFEKTİ (Mouse takibi)
+        const cards = document.querySelectorAll('.card');
+        cards.forEach(card => {
+            card.addEventListener('mousemove', e => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                const xc = rect.width / 2;
+                const yc = rect.height / 2;
+                const dx = x - xc;
+                const dy = y - yc;
+                // Eğilme miktarını ayarla (dx/20, dy/20)
+                card.style.transform = `perspective(1000px) rotateX(${-dy/25}deg) rotateY(${dx/25}deg) scale3d(1.02, 1.02, 1.02)`;
+            });
+            card.addEventListener('mouseleave', e => {
+                card.style.transform = `perspective(1000px) rotateX(0deg) rotateY(0deg) scale3d(1, 1, 1)`;
+            });
+        });
+
         // İÇ ŞAKALAR / ANILAR
         const quotes = [
             "Umme: 'Hadi beyler artık bir toplanalım!'",
@@ -99,22 +150,30 @@
             "Levent: 'Kanka cüzdanı arabada unutmuşum ya.'",
             "Memo: 'Sakin ol, ben hallettim o işi.'",
             "Dico: 'Bizim farkımız tarzımız kardeşim.'",
-            "Grup: 'Levent yine ne işler çeviriyorsun?'"
+            "Grup: 'Levent yine ne işler çeviriyorsun?'",
+            "3 Yıl Önce: 'Bu grup efsane olacak demiştik.'"
         ];
 
         function generateQuote() {
             const display = document.getElementById('quote-display');
             const random = Math.floor(Math.random() * quotes.length);
+            
+            // Eski yazıyı temizle ve animasyonu yeniden tetikle
+            display.style.animation = 'none';
+            display.offsetHeight; /* trigger reflow */
+            display.style.animation = null; 
+            
             display.innerHTML = quotes[random];
         }
 
-        // LEVENT KAÇIRMA SİSTEMİ
+        // LEVENT KAÇIRMA SİSTEMİ (GSAP ile pürüzsüz)
         function moveLevent() {
             const card = document.getElementById('levent-card');
-            // Rastgele 100px ile 150px arası zıplama
-            const x = Math.random() * 200 - 100;
-            const y = Math.random() * 200 - 100;
-            card.style.transform = `translate(${x}px, ${y}px) rotate(${Math.random() * 10 - 5}deg)`;
+            const x = Math.random() * 300 - 150; // -150px ile 150px arası zıplama
+            const y = Math.random() * 300 - 150;
+            const r = Math.random() * 20 - 10; // Hafif rotasyon
+
+            gsap.to(card, { x: x, y: y, rotation: r, duration: 0.3, ease: "back.out(1.7)" });
         }
 
         // 3 YILLIK DOSTLUK SAYACI (Mart 2023 Başlangıç)
