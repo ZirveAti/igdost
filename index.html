@@ -11,28 +11,18 @@
     <style>
         body { font-family: 'Plus Jakarta Sans', sans-serif; background: #050505; color: white; overflow-x: hidden; }
         .cyber-font { font-family: 'Orbitron', sans-serif; }
-        
-        /* Neon Glow Efektleri */
-        .neon-text { text-shadow: 0 0 10px rgba(245, 158, 11, 0.5), 0 0 20px rgba(245, 158, 11, 0.3); }
-        .neon-border { box-shadow: 0 0 15px rgba(245, 158, 11, 0.2); border: 1px solid rgba(245, 158, 11, 0.3); }
-        
-        /* Kartlar */
+        .neon-text { text-shadow: 0 0 15px rgba(245, 158, 11, 0.6); }
         .admin-card { 
-            background: rgba(15, 15, 15, 0.8); 
+            background: rgba(15, 15, 15, 0.9); 
             backdrop-filter: blur(20px); 
-            border-radius: 30px; 
-            padding: 40px; 
+            border-radius: 35px; 
+            padding: 45px; 
+            border: 1px solid rgba(255, 255, 255, 0.03);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            opacity: 0; transform: translateY(100px);
+            opacity: 0; transform: translateY(80px);
         }
-        .admin-card:hover { transform: scale(1.03) translateY(-10px); border-color: #f59e0b; }
-
-        /* Levent Kaçış Animasyonu */
-        #levent-card { border-color: #ef4444; position: relative; }
-        #levent-card:hover { box-shadow: 0 0 30px rgba(239, 68, 68, 0.4); }
-
-        /* Arka Plan Hareketli Yıldızlar */
-        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; }
+        .admin-card:hover { border-color: #f59e0b; transform: translateY(-10px); }
+        #bg-canvas { position: fixed; top: 0; left: 0; z-index: -1; width: 100%; height: 100%; pointer-events: none; opacity: 0.4; }
     </style>
 </head>
 <body>
@@ -40,131 +30,126 @@
     <canvas id="bg-canvas"></canvas>
 
     <nav class="fixed top-0 w-full z-[100] bg-black/80 backdrop-blur-xl border-b border-white/5 py-4 px-8 flex justify-between items-center">
-        <div class="cyber-font text-amber-500 font-black tracking-tighter text-xl italic">ADMIN: ATI</div>
-        <div id="main-timer" class="hidden md:block text-[10px] tracking-[0.4em] text-stone-500 font-bold uppercase">SİSTEM YÜKLENİYOR...</div>
-        <a href="https://instagram.com/quitat1" target="_blank" class="bg-amber-600 hover:bg-white hover:text-black px-4 py-1.5 rounded-full text-[10px] font-black transition-all">@QUITAT1</a>
+        <div class="cyber-font text-amber-500 font-black tracking-tighter text-xl italic neon-text">ADMIN: ATI</div>
+        <div id="main-timer" class="hidden md:block text-[10px] tracking-[0.4em] text-stone-500 font-bold">BAĞLANTI KURULDU...</div>
+        <a href="https://instagram.com/quitat1" target="_blank" class="bg-amber-600 hover:bg-white hover:text-black px-5 py-2 rounded-full text-[10px] font-black transition-all">@QUITAT1</a>
     </nav>
 
-    <header class="h-screen flex flex-col justify-center items-center text-center px-4">
-        <div class="cyber-font text-[15rem] md:text-[25rem] opacity-[0.03] absolute font-black select-none pointer-events-none">ATI</div>
-        <h1 class="cyber-font text-6xl md:text-9xl font-black neon-text mb-4 italic opacity-0" id="title">PORTAL <span class="text-white">03</span></h1>
-        <p class="text-stone-500 tracking-[0.5em] uppercase text-[10px] mb-12 opacity-0" id="subtitle">3 Yıllık Veri Arşivi Serbest Bırakıldı</p>
+    <header class="h-screen flex flex-col justify-center items-center text-center px-4 relative">
+        <div class="cyber-font text-[15rem] md:text-[25rem] opacity-[0.02] absolute font-black select-none pointer-events-none">ATI</div>
+        <h1 class="cyber-font text-6xl md:text-9xl font-black neon-text mb-4 italic opacity-0" id="title">3 <span class="text-white">YIL.</span></h1>
+        <p class="text-stone-400 tracking-[0.3em] uppercase text-[11px] mb-12 opacity-0 font-bold" id="subtitle">Kardeşlikten Öte Bir Hikaye</p>
         
         <div class="opacity-0" id="cta">
-            <button onclick="generateQuote()" class="neon-border bg-transparent text-white px-12 py-5 rounded-full text-xs font-black hover:bg-amber-600 transition-all uppercase tracking-widest">Anı Verisini Çek</button>
-            <div id="quote-display" class="mt-12 text-2xl italic text-stone-400 font-light max-w-2xl px-6 min-h-[60px]"></div>
+            <button onclick="generateQuote()" class="bg-white text-black px-12 py-5 rounded-full text-xs font-black hover:bg-amber-600 hover:text-white transition-all uppercase tracking-widest shadow-[0_0_30px_rgba(255,255,255,0.1)]">Anılara Dokun</button>
+            <div id="quote-display" class="mt-12 text-2xl italic text-stone-400 font-light max-w-2xl px-6 min-h-[80px] leading-relaxed"></div>
         </div>
     </header>
 
     <main class="max-w-6xl mx-auto px-6 grid gap-8 md:grid-cols-2 lg:grid-cols-3 pb-60 relative z-10">
         
         <div class="admin-card group">
-            <div class="flex justify-between items-center mb-8 text-amber-500">
-                <span class="cyber-font text-xs font-bold">DATA_01</span>
-                <span class="text-[9px] border border-amber-500/50 px-2 py-1 rounded">MASTER</span>
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#01</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition">TOKITA</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8">3 yıllık sarsılmaz saha desteği. Brawl Stars evreninin babası. Strateji ve bilek gücünün tek adresi.</p>
-            <div class="h-1 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 w-full animate-pulse"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">TOKITA</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">3 yıldır bu ekibin değişmez gücü. Brawl Stars'ta ondan başkasına güvenmem, oyunun kitabını yazar. Her zaman yanımızda olan harbi bir dost.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Yetenek Seviyesi: Max</div>
         </div>
 
         <div class="admin-card group">
-            <div class="flex justify-between items-center mb-8 text-amber-500">
-                <span class="cyber-font text-xs font-bold">DATA_02</span>
-                <span class="text-[9px] border border-amber-500/50 px-2 py-1 rounded">PEACE</span>
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#02</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition">UMME</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8">3 yıllık huzur elçisi. Grubun denge noktası ve en pozitif enerjisi. Umme varsa sorun yoktur.</p>
-            <div class="h-1 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 w-full opacity-50"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">UMME</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">3 koca yıl geçti, bir kez bile kalbimizi kırmadı. Grubun en samimi, en içten ismi. O olmazsa bu ekipteki o huzur kesinlikle eksik kalırdı.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Huzur Kaynağı</div>
         </div>
 
         <div class="admin-card group">
-            <div class="flex justify-between items-center mb-8 text-amber-500">
-                <span class="cyber-font text-xs font-bold">DATA_03</span>
-                <span class="text-[9px] border border-amber-500/50 px-2 py-1 rounded">INTEL</span>
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#03</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition">MEMO</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8">Grubun beyni. 3 yıldır sessizce kurduğu stratejilerle her krizi fırsata çeviren deha.</p>
-            <div class="h-1 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 w-full opacity-50"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">MEMO</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">Sessiz durur ama her şeyi o çözer. 3 yıldır ne zaman başımız sıkışsa bir yolunu buldu. Zekasıyla ve sakinliğiyle ekibin görünmez beyni.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Görünmez Stratejist</div>
         </div>
 
         <div class="admin-card group">
-            <div class="flex justify-between items-center mb-8 text-amber-500">
-                <span class="cyber-font text-xs font-bold">DATA_04</span>
-                <span class="text-[9px] border border-amber-500/50 px-2 py-1 rounded">CORE</span>
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#04</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition">MAMI</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8">Samimiyetin merkezi. 3 yıldır bitmeyen enerjisi ve harbi duruşuyla grubun atan kalbi.</p>
-            <div class="h-1 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 w-full opacity-50"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">MAMI</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">Onun olduğu yerde moral bozukluğu imkansız. 3 yıldır enerjisiyle hepimizi ayağa kaldıran, neşesi bitmeyen o samimi dostluk.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Bitmeyen Enerji</div>
         </div>
 
-        <div class="admin-card group border-b-4 border-amber-600">
-            <div class="flex justify-between items-center mb-8 text-amber-500">
-                <span class="cyber-font text-xs font-bold">DATA_05</span>
-                <span class="text-[9px] border border-amber-500/50 px-2 py-1 rounded">STYLE</span>
+        <div class="admin-card group">
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#05</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition">DICO</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8">Vizyon ve karizma. 3 yıldır gruptaki kalite standardını belirleyen, tarzın tek adresi.</p>
-            <div class="h-1 bg-stone-800 rounded-full overflow-hidden"><div class="h-full bg-amber-500 w-full opacity-50"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">DICO</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">Duruşuyla, vizyonuyla grubun en karizmatik adamı. 3 yıldır ekibe her zaman bir kalite kattı. Tarzı yeter deriz ya, tam o hesap.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Ekibin Karizması</div>
         </div>
 
-        <div id="levent-card" class="admin-card group bg-red-950/10" onmouseover="moveLevent()">
-            <div class="flex justify-between items-center mb-8 text-red-600">
-                <span class="cyber-font text-xs font-bold">ERR_404</span>
-                <span class="text-[9px] border border-red-600 px-2 py-1 rounded animate-pulse">YAVŞAK ALERT</span>
+        <div id="levent-card" class="admin-card group" onmouseover="moveLevent()">
+            <div class="flex justify-between items-center mb-8">
+                <span class="cyber-font text-amber-500 text-[10px]">#06</span>
+                <div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
             </div>
-            <h2 class="cyber-font text-3xl font-black mb-4 text-red-600">LEVENT</h2>
-            <p class="text-sm text-stone-500 leading-relaxed mb-8 italic">3 yıldır sabır testimiz. Yavşaklık seviyesi artık sistem limitlerini aştı. Yakalamak imkansız.</p>
-            <div class="h-1 bg-red-900 rounded-full overflow-hidden"><div class="h-full bg-red-500 w-full"></div></div>
+            <h2 class="cyber-font text-3xl font-black mb-4 group-hover:text-amber-500 transition uppercase">LEVENT</h2>
+            <p class="text-[15px] text-stone-400 leading-relaxed mb-8">3 yıllık bu serüvenin en yerinde duramayan ismi. Kendine has bir dünyası var, hareketli ve hep dinamik. Onsuz bu grup kesinlikle çok daha sessiz olurdu.</p>
+            <div class="text-[9px] text-stone-600 font-black uppercase tracking-widest italic">Dinamik Güç</div>
         </div>
 
     </main>
 
-    <footer class="py-20 text-center bg-black border-t border-white/5">
-        <div class="cyber-font text-amber-500 text-xs mb-4 tracking-widest uppercase">Admin: Ati // @quitat1</div>
-        <p class="text-stone-600 text-[9px] tracking-[0.5em] uppercase italic">Bazı Bağlar Koparılamaz • 2023-2026</p>
+    <footer class="py-20 text-center bg-black/50 backdrop-blur-md border-t border-white/5">
+        <div class="cyber-font text-amber-500 text-xs mb-4 tracking-widest uppercase font-black">Admin: Ati // @quitat1</div>
+        <p class="text-stone-600 text-[10px] tracking-[0.4em] uppercase font-bold">Gerçek dostluklar zaman tanımaz • 2023-2026</p>
     </footer>
 
     <script>
         gsap.registerPlugin(ScrollTrigger);
 
-        // AÇILIŞ ANİMASYONU
         const tl = gsap.timeline();
-        tl.to("#title", { opacity: 1, scale: 1, duration: 1, ease: "expo.out" })
-          .to("#subtitle", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5")
+        tl.to("#title", { opacity: 1, scale: 1, duration: 1.2, ease: "expo.out" })
+          .to("#subtitle", { opacity: 1, y: 0, duration: 0.8 }, "-=0.7")
           .to("#cta", { opacity: 1, y: 0, duration: 0.8 }, "-=0.5");
 
-        // KARTLARIN SİRAYLA GELMESİ
         gsap.to(".admin-card", {
-            scrollTrigger: { trigger: "main", start: "top 80%" },
-            opacity: 1, y: 0, stagger: 0.15, duration: 1, ease: "power4.out"
+            scrollTrigger: { trigger: "main", start: "top 85%" },
+            opacity: 1, y: 0, stagger: 0.2, duration: 1.2, ease: "power4.out"
         });
 
-        // LEVENT KAÇIRMA
         function moveLevent() {
             const card = document.getElementById('levent-card');
-            const x = Math.random() * 400 - 200;
-            const y = Math.random() * 400 - 200;
-            gsap.to(card, { x: x, y: y, duration: 0.3, ease: "back.out(2)" });
+            const x = Math.random() * 300 - 150;
+            const y = Math.random() * 300 - 150;
+            gsap.to(card, { x: x, y: y, duration: 0.4, ease: "back.out(2)" });
         }
 
-        // ANILAR
         const quotes = [
-            "Umme: 'Hadi beyler artık bir toplanalım!'",
-            "Tokita: 'Brawl Stars girmeyen Levent'tir.'",
-            "Ati (Admin): 'Dostluk bakidir, Levent yavşaktır.'",
-            "Mami: 'Kanka vallahi olay öyle değil...'",
-            "Levent: 'Kanka cüzdanı arabada unutmuşum ya.'",
-            "Dico: 'Bizim farkımız tarzımız kardeşim.'"
+            "Umme: 'Hadi beyler, artık bi' buluşalım ya!'",
+            "Tokita: 'Brawl Stars girmeyecek var mı?'",
+            "Ati (Admin): '3 yıl bitti, daha nice yıllara beyler.'",
+            "Mami: 'Valla kanka, olay tam olarak şöyle oldu...'",
+            "Levent: 'Beyler, bugün ne yapıyoruz, plan ne?'",
+            "Dico: 'Bizim farkımız kalitemiz kardeşim.'"
         ];
 
         function generateQuote() {
             const display = document.getElementById('quote-display');
             const random = Math.floor(Math.random() * quotes.length);
-            gsap.fromTo(display, { opacity: 0, filter: "blur(10px)" }, { opacity: 1, filter: "blur(0px)", duration: 0.5, onStart: () => { display.innerHTML = quotes[random]; } });
+            gsap.fromTo(display, { opacity: 0, scale: 0.95 }, { opacity: 1, scale: 1, duration: 0.4, onStart: () => { display.innerHTML = quotes[random]; } });
         }
 
-        // SAYAÇ
         const start = new Date("March 24, 2023 00:00:00").getTime();
         setInterval(() => {
             const now = new Date().getTime();
@@ -173,21 +158,20 @@
             const h = Math.floor((diff % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             const m = Math.floor((diff % (1000 * 60 * 60)) / (1000 * 60));
             const s = Math.floor((diff % (1000 * 60)) / 1000);
-            document.getElementById('main-timer').innerHTML = `LOG_TIME: ${d}D:${h}H:${m}M:${s}S`;
+            document.getElementById('main-timer').innerHTML = `BİZİM SÜRE: ${d} GÜN ${h} SAAT ${m} DK ${s} SN`;
         }, 1000);
 
-        // ARKA PLAN PARÇACIKLARI (Basit Yıldızlar)
         const canvas = document.getElementById('bg-canvas');
         const ctx = canvas.getContext('2d');
         let stars = [];
         function init() {
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
-            for(let i=0; i<150; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*1.5, speed: Math.random()*0.5});
+            for(let i=0; i<150; i++) stars.push({x: Math.random()*canvas.width, y: Math.random()*canvas.height, size: Math.random()*1.5, speed: Math.random()*0.3});
         }
         function animate() {
             ctx.clearRect(0,0,canvas.width, canvas.height);
-            ctx.fillStyle = "white";
+            ctx.fillStyle = "rgba(255, 255, 255, 0.4)";
             stars.forEach(s => {
                 ctx.beginPath();
                 ctx.arc(s.x, s.y, s.size, 0, Math.PI*2);
