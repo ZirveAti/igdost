@@ -3,126 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3 Yıllık Miras | Dostluk Portreleri</title>
+    <title>3 Yıllık Efsane | Dostluk Meydanı</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700;1,400&family=Plus+Jakarta+Sans:wght@300;400;600;800&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Unna:ital,wght@0,400;0,700&family=Plus+Jakarta+Sans:wght@300;600;800&display=swap" rel="stylesheet">
     <style>
-        html { scroll-behavior: smooth; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #f8f5f2; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background: #fdfaf6; scroll-behavior: smooth; }
         .serif { font-family: 'Unna', serif; }
-        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
-        .glass-card:hover { transform: scale(1.02); box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.1); }
-        .brawl-badge { background: linear-gradient(90deg, #ff8a00, #e52e71); color: white; padding: 2px 10px; border-radius: 99px; font-size: 10px; font-weight: 800; text-transform: uppercase; }
+        .card { transition: all 0.4s ease; border: 1px solid rgba(0,0,0,0.05); }
+        .card:hover { transform: translateY(-10px); box-shadow: 0 30px 60px -12px rgba(0,0,0,0.1); }
+        #counter span { color: #d97706; font-weight: 800; }
+        .brawl-bar { height: 8px; background: #e5e7eb; border-radius: 4px; overflow: hidden; margin-top: 4px; }
+        .brawl-progress { height: 100%; background: linear-gradient(90deg, #f59e0b, #ef4444); width: 100%; }
     </style>
 </head>
-<body class="text-slate-900">
+<body class="text-stone-900">
 
-    <nav class="fixed top-0 w-full z-50 py-6 px-10">
-        <div class="max-w-6xl mx-auto flex justify-between items-center bg-white/70 backdrop-blur-lg rounded-full px-8 py-3 shadow-sm border border-stone-200">
-            <span class="serif text-2xl font-bold tracking-tighter italic">Dostlar Meclisi<span class="text-amber-600">.</span></span>
-            <div class="hidden md:flex space-x-6 text-[11px] font-extrabold uppercase tracking-[0.2em] text-stone-500">
-                <a href="#tokita" class="hover:text-amber-600 transition">Tokita</a>
-                <a href="#umme" class="hover:text-amber-600 transition">Ümme</a>
-                <a href="#memo" class="hover:text-amber-600 transition">Memo</a>
-                <a href="#mami" class="hover:text-amber-600 transition">Mami</a>
-                <a href="#dico" class="hover:text-amber-600 transition">Dico</a>
-                <a href="#levent" class="hover:text-red-600 transition text-red-700 underline decoration-2 decoration-red-500">Levent</a>
+    <div class="bg-stone-900 text-white py-3 px-6 text-center sticky top-0 z-[100] border-b border-amber-500/30">
+        <div id="counter" class="text-xs md:text-sm tracking-widest uppercase font-bold text-stone-400">
+            Dostlukta <span id="days">0</span> GÜN <span id="hours">0</span> SAAT <span id="minutes">0</span> DAKİKA <span id="seconds">0</span> SANİYE
+        </div>
+    </div>
+
+    <header class="pt-24 pb-12 text-center px-6">
+        <h1 class="serif text-7xl md:text-9xl font-bold tracking-tighter italic">3 Yıl<span class="text-amber-600">.</span></h1>
+        <p class="mt-4 text-stone-500 max-w-lg mx-auto italic">"Altı kişi, binlerce hikaye, bir ömürlük kardeşlik."</p>
+    </header>
+
+    <main class="max-w-6xl mx-auto px-6 grid gap-8 md:grid-cols-2 lg:grid-cols-3 pb-32">
+
+        <div class="card bg-white p-8 rounded-[3rem] relative overflow-hidden">
+            <div class="absolute top-6 right-6 bg-red-600 text-white text-[10px] px-3 py-1 rounded-full font-black italic">PRO PLAYER</div>
+            <h2 class="serif text-4xl mb-2 italic">Tokita</h2>
+            <p class="text-xs text-amber-600 font-bold mb-6 uppercase tracking-widest underline">Brawl Stars'ın Babası</p>
+            <p class="text-sm text-stone-600 mb-8">3 yıldır yanımda olan koca yürekli adam. Sadakatte 1 numara, oyunda ise tam bir canavar. Tokita sahneye çıktığında rakibe huzur yok.</p>
+            
+            <div class="space-y-3">
+                <div class="text-[10px] font-bold">REFELEKS: 10/10 <div class="brawl-bar"><div class="brawl-progress"></div></div></div>
+                <div class="text-[10px] font-bold">SADAKAT: 10/10 <div class="brawl-bar"><div class="brawl-progress"></div></div></div>
+                <div class="text-[10px] font-bold">LEVENT'İ TAŞIMA: 0/10 <div class="brawl-bar"><div class="brawl-progress" style="width:5%"></div></div></div>
             </div>
         </div>
-    </nav>
 
-    <section class="pt-48 pb-20 text-center px-6">
-        <div class="inline-block px-4 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-widest mb-6">3 Yıllık Bir Hikaye</div>
-        <h1 class="serif text-6xl md:text-8xl mb-8 font-bold leading-none tracking-tighter">Birlikte Geçen <br><span class="italic text-amber-600">Binlerce An.</span></h1>
-        <p class="max-w-2xl mx-auto text-stone-500 font-light text-xl leading-relaxed">
-            Dile kolay, tam 3 yıldır omuz omuza... Kimiyle güldük, kimiyle dertleştik, kimiyle de sabrımızı sınadık. İşte benim penceremden bizimkiler.
-        </p>
-    </section>
+        <div class="card bg-white p-8 rounded-[3rem]">
+            <h2 class="serif text-4xl mb-2 italic">Ümme</h2>
+            <p class="text-xs text-amber-600 font-bold mb-6 uppercase tracking-widest">Huzur Kaynağı</p>
+            <p class="text-sm text-stone-600">Bu 3 yılın en yumuşak, en naif dokunuşu. Ümme'nin varlığı gruptaki tüm fırtınaları dindirmeye yeter. İyi ki bizimle.</p>
+        </div>
 
-    <main class="max-w-6xl mx-auto px-6 pb-32 grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+        <div class="card bg-white p-8 rounded-[3rem]">
+            <h2 class="serif text-4xl mb-2 italic">Memo</h2>
+            <p class="text-xs text-amber-600 font-bold mb-6 uppercase tracking-widest">Strateji Dehası</p>
+            <p class="text-sm text-stone-600">Olaylara "Memo bakışı" diye bir gerçek var. 3 yıldır her krizde o sakin ve zeki tavrıyla hepimizi kendine hayran bıraktı.</p>
+        </div>
 
-        <div id="tokita" class="glass-card p-10 rounded-[40px] flex flex-col justify-between">
-            <div>
-                <div class="flex justify-between items-start mb-6">
-                    <h2 class="serif text-4xl font-bold italic">Tokita</h2>
-                    <span class="brawl-badge">Brawl Stars Babası</span>
+        <div class="card bg-white p-8 rounded-[3rem]">
+            <h2 class="serif text-4xl mb-2 italic">Mami</h2>
+            <p class="text-xs text-amber-600 font-bold mb-6 uppercase tracking-widest">Samimiyet Abidesi</p>
+            <p class="text-sm text-stone-600">Mami demek, maskesiz ve olduğu gibi bir dostluk demek. 3 yıllık bu yolculuğun en içten, en harbi karakterlerinden biri.</p>
+        </div>
+
+        <div class="card bg-white p-8 rounded-[3rem]">
+            <h2 class="serif text-4xl mb-2 italic text-amber-800">Dico</h2>
+            <p class="text-xs text-amber-600 font-bold mb-6 uppercase tracking-widest underline">Vizyoner Karizma</p>
+            <p class="text-sm text-stone-600 leading-relaxed">Dico'nun kendine has bir ağırlığı var. 3 yıldır çizgisini hiç bozmadı, her zaman grubun en klas adamı kalmayı başardı.</p>
+        </div>
+
+        <div class="card bg-stone-900 text-white p-8 rounded-[3rem] border-2 border-red-600 shadow-[0_0_30px_rgba(220,38,38,0.2)]">
+            <h2 class="serif text-4xl mb-2 italic text-red-500 uppercase font-black">Levent</h2>
+            <p class="text-xs text-red-400 font-bold mb-6 uppercase tracking-widest">Dikkat: %100 Yavşak</p>
+            <p class="text-sm text-stone-400 mb-8 italic">3 yıllık dostluk sürecimizde sabrımızı en çok zorlayan ama bir şekilde kendini sevdiren (ya da zorla sevdiren) o meşhur yavşak.</p>
+            
+            <div class="bg-stone-800 p-4 rounded-2xl border border-stone-700">
+                <div class="flex justify-between text-[10px] mb-2 font-bold uppercase tracking-widest">
+                    <span>Yavşaklık Metresi</span>
+                    <span class="text-red-500" id="lev-percent">%99</span>
                 </div>
-                <p class="text-stone-600 font-medium mb-4 italic">"Grubun hem sessiz gücü hem de arenaların tek hâkimi."</p>
-                <div class="h-px w-full bg-stone-200 my-4"></div>
-                <p class="text-sm text-stone-500 leading-relaxed">
-                    3 yıldır yanımda olan bu adam, sadakatin ne olduğunu bana her gün öğretiyor. Ama asıl olay o telefona Brawl Stars düştüğünde başlıyor; tam bir baba, tam bir usta! Tokita varsa o maç kazanılır, o dostluk baki kalır.
-                </p>
+                <div class="brawl-bar bg-stone-700"><div class="brawl-progress bg-red-600" id="lev-bar" style="width: 99%"></div></div>
             </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-amber-600">3 Yıllık Kardeş</div>
-        </div>
-
-        <div id="umme" class="glass-card p-10 rounded-[40px] flex flex-col justify-between">
-            <div>
-                <h2 class="serif text-4xl font-bold italic mb-6">Ümme</h2>
-                <p class="text-stone-600 font-medium mb-4 italic">"Pozitif enerjinin yeryüzündeki gölgesi."</p>
-                <div class="h-px w-full bg-stone-200 my-4"></div>
-                <p class="text-sm text-stone-500 leading-relaxed">
-                    3 koca yıl boyunca ne zaman düşsem, elini uzatan ilk kişi oldu. Ümme'nin varlığı, en sert tartışmaların bile tatlıya bağlanacağı bir huzur garantisidir. Grubun neşesi, her şeyin en güzelini hak eden can dostum.
-                </p>
-            </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-amber-600">3 Yıllık Destek</div>
-        </div>
-
-        <div id="memo" class="glass-card p-10 rounded-[40px] flex flex-col justify-between border-stone-300">
-            <div>
-                <h2 class="serif text-4xl font-bold italic mb-6">Memo</h2>
-                <p class="text-stone-600 font-medium mb-4 italic">"Zekasıyla sessizce çözen adam."</p>
-                <div class="h-px w-full bg-stone-200 my-4"></div>
-                <p class="text-sm text-stone-500 leading-relaxed">
-                    Memo ile geçen 3 yıl, aslında bir hayat dersi gibi. Olayları analiz edişi ve o bitmek bilmeyen pratik zekası her seferinde şaşırtıyor. Sessiz ama derinden gider, her zaman doğru olanın yanındadır.
-                </p>
-            </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-amber-600">3 Yıllık Akıl</div>
-        </div>
-
-        <div id="mami" class="glass-card p-10 rounded-[40px] flex flex-col justify-between">
-            <div>
-                <h2 class="serif text-4xl font-bold italic mb-6">Mami</h2>
-                <p class="text-stone-600 font-medium mb-4 italic">"Samimiyetin kitabını yazan dost."</p>
-                <div class="h-px w-full bg-stone-200 my-4"></div>
-                <p class="text-sm text-stone-500 leading-relaxed">
-                    3 yıldır Mami ile biriktirdiğimiz anıları yazsam kitap olur. Öyle bir samimiyet ki, yanında hiç yabancılık çekmezsiniz. Dürüstlüğü ve içtenliğiyle grubun kalbi olmayı her zaman başarıyor.
-                </p>
-            </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-amber-600">3 Yıllık Samimiyet</div>
-        </div>
-
-        <div id="dico" class="glass-card p-10 rounded-[40px] flex flex-col justify-between border-amber-200">
-            <div>
-                <h2 class="serif text-4xl font-bold italic mb-6">Dico</h2>
-                <p class="text-stone-600 font-medium mb-4 italic">"Kendine has tarzın tek adresi."</p>
-                <div class="h-px w-full bg-stone-200 my-4"></div>
-                <p class="text-sm text-stone-500 leading-relaxed">
-                    3 yıldır tanıdığım Dico, grubun vizyoner ve karizmatik yüzü. Hayata bakış açısı o kadar farklı ki, ondan her gün yeni bir şeyler öğrenmek mümkün. Duruşuyla ve karakteriyle her zaman fark yaratır.
-                </p>
-            </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-amber-600">3 Yıllık Vizyon</div>
-        </div>
-
-        <div id="levent" class="bg-stone-950 p-10 rounded-[40px] flex flex-col justify-between shadow-2xl relative overflow-hidden group">
-            <div class="absolute -right-4 -top-4 bg-red-600 text-white text-[10px] font-black px-6 py-2 rotate-45 group-hover:bg-red-500 transition">DİKKAT!</div>
-            <div>
-                <h2 class="serif text-4xl font-bold italic mb-6 text-red-600">Levent</h2>
-                <p class="text-red-400 font-medium mb-4 italic">"Yavşaklığın kitabını yazan baş kahraman."</p>
-                <div class="h-px w-full bg-stone-800 my-4"></div>
-                <p class="text-sm text-stone-400 leading-relaxed">
-                    Geldik bizim 3 yıllık baş ağrısına... Levent'i anlatmaya kelimeler yetmez, yavşaklık seviyesi her geçen yıl bir üst segmente çıkıyor. Ama ne yalan söyleyeyim, o olmasa grubun tadı tuzu eksik kalırdı. Yavşak ama bizim yavşağımız.
-                </p>
-            </div>
-            <div class="mt-8 text-[10px] font-black uppercase text-red-600">3 Yıllık Sabır Testi</div>
         </div>
 
     </main>
 
-    <footer class="py-20 bg-stone-100 border-t border-stone-200 text-center">
-        <div class="serif text-3xl font-bold italic mb-4">Gözlemler Arşivi</div>
-        <p class="text-stone-400 text-sm">Bu site, 3 yıllık sarsılmaz bir dostluk için kodlanmıştır.</p>
-    </footer>
+    <script>
+        // SAYAÇ AYARLARI (3 yıl öncesine göre ayarla)
+        const startDate = new Date("March 24, 2023 00:00:00").getTime();
 
+        setInterval(function() {
+            const now = new Date().getTime();
+            const distance = now - startDate;
+
+            const d = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const h = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const m = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const s = Math.floor((distance % (1000 * 60)) / 1000);
+
+            document.getElementById("days").innerHTML = d;
+            document.getElementById("hours").innerHTML = h;
+            document.getElementById("minutes").innerHTML = m;
+            document.getElementById("seconds").innerHTML = s;
+            
+            // Levent'in yavşaklık oranını her saniye ufakça değiştir (95-100 arası)
+            const levRand = Math.floor(Math.random() * (100 - 95 + 1)) + 95;
+            document.getElementById("lev-percent").innerHTML = "%" + levRand;
+            document.getElementById("lev-bar").style.width = levRand + "%";
+
+        }, 1000);
+    </script>
 </body>
 </html>
