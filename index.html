@@ -1,214 +1,216 @@
-
 <!DOCTYPE html>
 <html lang="tr">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Bizim Ekip</title>
-
 <style>
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: black;
-    color: white;
-    text-align: center;
-    overflow-x: hidden;
+    margin:0;
+    font-family:'Segoe UI',sans-serif;
+    background: radial-gradient(circle at top,#0f172a,#020617);
+    color:white;
+    scroll-behavior:smooth;
+    overflow-x:hidden;
 }
-
-/* YILDIZ ARKA PLAN */
-canvas {
-    position: fixed;
-    top: 0;
-    left: 0;
-    z-index: -1;
+/* MENÜ */
+nav{
+    position:sticky;
+    top:0;
+    background: rgba(0,0,0,0.6);
+    backdrop-filter:blur(10px);
+    display:flex;
+    justify-content:center;
+    padding:15px 0;
+    z-index:100;
 }
-
-/* BAŞLIK */
-h1 {
-    margin-top: 50px;
-    font-size: 35px;
+nav a{
+    margin:0 20px;
+    color:white;
+    text-decoration:none;
+    font-weight:bold;
+    position:relative;
+    transition:0.3s;
 }
-
-/* YAZI ANİMASYONU */
-.typing {
-    color: #aaa;
-    margin-bottom: 30px;
-    border-right: 2px solid white;
-    display: inline-block;
-    white-space: nowrap;
-    overflow: hidden;
-    animation: typing 4s steps(40), blink .7s infinite;
+nav a::after{
+    content:'';
+    position:absolute;
+    left:0; bottom:-5px;
+    width:0;
+    height:2px;
+    background:#00f0ff;
+    transition:0.3s;
 }
-
-@keyframes typing {
-    from { width: 0 }
-    to { width: 260px }
+nav a:hover::after{
+    width:100%;
 }
-
-@keyframes blink {
-    50% { border-color: transparent }
+nav a:hover{
+    color:#00f0ff;
 }
-
-/* GRID */
-.kapsayici {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    padding: 20px;
+/* ALT MENU AÇIKLAMALARI */
+nav a[data-desc]:hover::after {
+    content: attr(data-desc);
+    position:absolute;
+    bottom:-25px;
+    left:50%;
+    transform:translateX(-50%);
+    color:#00f0ff;
+    font-size:12px;
+    white-space:nowrap;
 }
-
-/* KART */
-.kart {
-    padding: 25px 40px;
-    border-radius: 15px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(10px);
-    transition: 0.3s;
-    position: relative;
+/* BAŞLIK + TYPING */
+h1{text-align:center;margin-top:50px;font-size:38px;}
+.typing{
+    color:#aaa;
+    margin-bottom:30px;
+    border-right:2px solid white;
+    display:inline-block;
+    white-space:nowrap;
+    overflow:hidden;
+    animation:typing 4s steps(40),blink .7s infinite;
 }
-
-/* BORDER */
-.kart::before {
-    content: "";
-    position: absolute;
-    inset: 0;
-    border-radius: 15px;
-    padding: 2px;
-    background: linear-gradient(45deg, #00f0ff, #ff00c8);
+@keyframes typing{
+    from{width:0} to{width:350px}
+}
+@keyframes blink{
+    50%{border-color:transparent}
+}
+/* GRID KARTLAR */
+.kapsayici{
+    display:flex; flex-wrap:wrap; justify-content:center; gap:20px; padding:30px 10px;
+}
+.kart{
+    cursor:pointer;
+    padding:25px 30px;
+    border-radius:15px;
+    background:rgba(255,255,255,0.05);
+    backdrop-filter:blur(10px);
+    transition:0.3s;
+    position:relative;
+    width:200px;
+}
+.kart::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    border-radius:15px;
+    padding:2px;
+    background:linear-gradient(45deg,#00f0ff,#ff00c8);
     -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
-    -webkit-mask-composite: xor;
-            mask-composite: exclude;
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
 }
-
-.kart:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 25px rgba(0,255,255,0.4);
+.kart:hover{
+    transform:scale(1.08) rotate(-1deg);
+    box-shadow:0 0 25px rgba(0,255,255,0.4);
 }
-
-/* İSİM */
-.kart h3 {
-    margin: 0;
-    text-transform: lowercase; /* BÜYÜK HARF SORUNU ÇÖZÜLDÜ */
-}
-
-/* LINK */
-.kart a {
-    text-decoration: none;
-    color: white;
-}
-
-/* ADMIN */
-.admin::before {
-    background: linear-gradient(45deg, gold, orange);
-}
-
-.admin h3 {
-    color: gold;
-}
-
+.kart h3{margin:0;text-transform:lowercase;}
+.kart p{margin-top:10px;color:#aaa;font-size:14px;}
+.admin::before{background:linear-gradient(45deg,gold,orange);}
+.admin h3{color:gold;}
 /* HAKKIMIZDA */
-.hakkinda {
-    margin-top: 50px;
-    padding: 20px;
-    color: #bbb;
+.hakkinda{
+    margin-top:50px;
+    padding:20px;
+    color:#bbb;
+    max-width:700px;
+    margin-left:auto; margin-right:auto;
+    text-align:left;
+    animation:fadeIn 2s ease;
 }
-
+@keyframes fadeIn{from{opacity:0; transform:translateY(20px);}to{opacity:1; transform:translateY(0);}}
+/* İLETİŞİM */
+#iletisim{margin-top:50px;padding:20px;color:#aaa;}
 /* FOOTER */
-.footer {
-    margin-top: 40px;
-    padding: 20px;
-    color: #666;
-    font-size: 14px;
-}
+.footer{margin-top:40px;padding:20px;color:#666;font-size:14px;text-align:center;}
+/* YILDIZ ARKA PLAN */
+canvas{position:fixed;top:0;left:0;z-index:-1;}
 </style>
-
 </head>
 <body>
-
 <canvas id="stars"></canvas>
 
-<h1>🚀 bizim ekip 🚀</h1>
+<nav>
+    <a href="#ekip" data-desc="Arkadaşlarımız ve Instagram linkleri">Ekip</a>
+    <a href="#hakkinda" data-desc="Biz kimiz ve ne yaparız">Hakkımızda</a>
+    <a href="#iletisim" data-desc="Bizimle iletişime geçin">İletişim</a>
+</nav>
+
+<h1>🔥 bizim ekip 🔥</h1>
 <p class="typing">takılmalık ekip | instagram linkleri ↓</p>
 
-<div class="kapsayici">
-
-    <div class="kart admin">
-        <a href="https://instagram.com/quitat1" target="_blank">
-            <h3>quitat1 👑</h3>
-        </a>
+<div class="kapsayici" id="ekip">
+    <div class="kart admin" onclick="window.open('https://instagram.com/quitat1','_blank')">
+        <h3>quitat1 👑</h3>
+        <p>"Herkesi topladım, eğlence başlasın!"</p>
+        <p>Rol: Admin & Organizasyon</p>
+        <p>Favori aktivite: Planlama & DM cevaplamak</p>
     </div>
-
-    <div class="kart">
-        <a href="https://www.instagram.com/jokeraslindahakliydi/" target="_blank">
-            <h3>jokeraslindahakliydi</h3>
-        </a>
+    <div class="kart" onclick="window.open('https://www.instagram.com/jokeraslindahakliydi/','_blank')">
+        <h3>jokeraslindahakliydi</h3>
+        <p>"Komik paylaşımlarla gündemi sallar 😏"</p>
+        <p>Rol: Mizah & Eğlence</p>
+        <p>Favori aktivite: Mem yapıp gülmek</p>
     </div>
-
-    <div class="kart">
-        <a href="https://www.instagram.com/mehmt_0d/" target="_blank">
-            <h3>mehmt_0d</h3>
-        </a>
+    <div class="kart" onclick="window.open('https://www.instagram.com/mehmt_0d/','_blank')">
+        <h3>mehmt_0d</h3>
+        <p>"Takımın stratejisti, planlamadan sorumlu 🧠"</p>
+        <p>Rol: Planlama & Taktik</p>
+        <p>Favori aktivite: Oyun stratejileri</p>
     </div>
-
-    <div class="kart">
-        <a href="https://www.instagram.com/levent_ydpnr" target="_blank">
-            <h3>levent_ydpnr</h3>
-        </a>
+    <div class="kart" onclick="window.open('https://www.instagram.com/levent_ydpnr','_blank')">
+        <h3>amcı levent</h3>
+        <p>"Enerjiyi hep yüksek tutar, moral kaynağı 💥"</p>
+        <p>Rol: Motivasyon & Enerji</p>
+        <p>Favori aktivite: Kahkaha & eğlence</p>
     </div>
-
-    <div class="kart">
-        <a href="https://www.instagram.com/muhyettinsry/" target="_blank">
-            <h3>muhyettinsry</h3>
-        </a>
+    <div class="kart" onclick="window.open('https://www.instagram.com/muhyettinsry/','_blank')">
+        <h3>muhyettinsry</h3>
+        <p>"Sakin ama ciddi, gerektiğinde destek verir 🤓"</p>
+        <p>Rol: Destek & Sakinlik</p>
+        <p>Favori aktivite: Yardım etmek & sohbet</p>
     </div>
-
 </div>
 
-<div class="hakkinda">
-    <p>biz sadece takılan bir ekip değiliz 😎</p>
-    <p>bu site tamamen eğlence amaçlı yapılmıştır</p>
+<div class="hakkinda" id="hakkinda">
+    <h2>Hakkımızda</h2>
+    <p>Biz sıradan bir ekip değiliz 😎 Günlük takılmalar, oyunlar ve eğlence bizim işimiz. Instagram paylaşımlarımızla birbirimizi destekler ve birlikte güleriz.</p>
+    <p>Her arkadaşın kendine özgü bir karakteri ve rolü var. Amcı Levent enerji kaynağımız, quitat1 organizasyonun lideri, jokeraslindahakliydi hep güldürür 😏</p>
+    <p>Bu site tamamen eğlence amaçlı yapılmıştır ve ekip ruhumuzu göstermek içindir. Eğer bizimle takılmak istiyorsan, kartlara tıklayarak Instagram’ımıza göz atabilirsin!</p>
+    <p>Ayrıca ekip olarak oyunlar, sohbetler ve challenge’larla enerjimizi yüksek tutuyoruz 🚀</p>
+</div>
+
+<div id="iletisim">
+    <h2>İletişim</h2>
+    <p>Instagram DM: quitat1</p>
+    <p>Telefon (güvenli gösterim): 0536 XXX XX 10</p>
+    <p>Email (opsiyonel): info@quitat1.com</p>
 </div>
 
 <div class="footer">
     © 2026 quitat1
 </div>
 
-<!-- YILDIZ SCRIPT -->
 <script>
-const canvas = document.getElementById("stars");
-const ctx = canvas.getContext("2d");
-
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-let stars = [];
-
-for (let i = 0; i < 100; i++) {
-    stars.push({
-        x: Math.random() * canvas.width,
-        y: Math.random() * canvas.height,
-        r: Math.random() * 2
-    });
-}
-
-function draw() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-    ctx.fillStyle = "white";
-
-    stars.forEach(star => {
+// YILDIZ ARKA PLAN
+const canvas=document.getElementById("stars");
+const ctx=canvas.getContext("2d");
+canvas.width=window.innerWidth;
+canvas.height=window.innerHeight;
+let stars=[];
+for(let i=0;i<150;i++){stars.push({x:Math.random()*canvas.width,y:Math.random()*canvas.height,r:Math.random()*2});}
+function draw(){
+    ctx.clearRect(0,0,canvas.width,canvas.height);
+    ctx.fillStyle="white";
+    stars.forEach(star=>{
         ctx.beginPath();
-        ctx.arc(star.x, star.y, star.r, 0, Math.PI * 2);
+        ctx.arc(star.x,star.y,star.r,0,Math.PI*2);
         ctx.fill();
-
-        star.y += 0.3;
-        if (star.y > canvas.height) star.y = 0;
+        star.y+=0.3;
+        if(star.y>canvas.height) star.y=0;
     });
-
     requestAnimationFrame(draw);
 }
-
 draw();
 </script>
 
